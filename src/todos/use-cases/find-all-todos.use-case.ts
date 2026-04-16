@@ -11,7 +11,7 @@ export class FindTodoUseCase {
     async execute() {
         try {
             this.loggers.log('Creating toDo... ');
-            const todo = await this.FindTodoRepository.find();
+            const todo = await this.FindTodoRepository.findAll();
             this.loggers.log('ToDo finded sucessfully');
             return todo;
         } catch (error) {
