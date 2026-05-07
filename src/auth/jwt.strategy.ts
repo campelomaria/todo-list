@@ -1,0 +1,1 @@
+//aqui é a estratégia né amore
