@@ -6,10 +6,14 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { TodosService } from './todos.service';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { CurrentUser } from 'src/auth/current-user.decorator';
+import "dotenv/config";
 
 @Controller('todos')
 export class TodosController {
@@ -18,6 +22,15 @@ export class TodosController {
   @Post()
   create(@Body() createTodoDto: CreateTodoDto) {
     return this.todosService.create(createTodoDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('private')
+  privateRoute(@CurrentUser() user: {id: string, email: string}) {
+    return {
+      message: 'Rota protegida liberada',
+      user,
+    };
   }
 
   @Get()
